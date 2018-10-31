@@ -1,0 +1,7 @@
+Podfile.lock
+Pods
+SearchAlongTheRouteIOS.xcworkspace/*
+SearchAlongTheRouteIOS.xcodeproj/xcuserdata/*
+SearchAlongTheRouteIOS.xcodeproj/project.xcworkspace/*
+.idea/
+.DS_Store
