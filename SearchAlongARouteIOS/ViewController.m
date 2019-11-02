@@ -144,15 +144,16 @@ static NSString *const EMPTY_DEPARTURE_POSITION_TAG = @" ";
 - (UIView <TTCalloutView> *)annotationManager:(id<TTAnnotationManager>)manager viewForSelectedAnnotation:(TTAnnotation *)selectedAnnotation {
     NSString *selectedCoordinatesString = [self coordinatesToString:selectedAnnotation.coordinate];
     if ([selectedCoordinatesString isEqualToString:[self coordinatesToString:self.departurePosition]]) {
-        return [[TTCalloutViewSimple alloc] init];
+        return [[TTCalloutOutlineView alloc] init];
     } else {
-        return [self createCustomAnnotation:selectedCoordinatesString];
+        return [[TTCalloutOutlineView alloc ] initWithUIView:[self createCustomAnnotation:selectedAnnotation]];
     }
 }
 
-- (UIView <TTCalloutView> *)createCustomAnnotation:(NSString *)coordinatesString {
+- (UIView <TTCalloutView> *)createCustomAnnotation:(TTAnnotation *)selectedAnnotation {
     CustomAnnotationView <TTCalloutView> *customAnnotation = [[NSBundle.mainBundle loadNibNamed:@"CustomAnnotationView" owner:self options:nil] firstObject];
-    NSArray *annotationStringArray = [self.positionsPoisInfo[coordinatesString] componentsSeparatedByString:@","];
+    NSArray *annotationStringArray = [self.positionsPoisInfo[[self coordinatesToString:selectedAnnotation.coordinate]] componentsSeparatedByString:@","];
+    customAnnotation.annotation = selectedAnnotation;
     customAnnotation.poiName.text = annotationStringArray[0];
     customAnnotation.poiAddress.text = annotationStringArray[1];
     customAnnotation.myDelegate = self;
@@ -276,9 +277,8 @@ static NSString *const EMPTY_DEPARTURE_POSITION_TAG = @" ";
     if (!CLLocationCoordinate2DIsValid(self.wayPointPosition)) {
         [self.tomtomMap.annotationManager removeAllAnnotations];
     }
-    TTMapRoute *mapRoute = [TTMapRoute routeWithCoordinatesData:self.fullRoute imageStart:[TTMapRoute defaultImageDeparture] imageEnd:[TTMapRoute defaultImageDestination]];
+    TTMapRoute *mapRoute = [TTMapRoute routeWithCoordinatesData:self.fullRoute withRouteStyle:TTMapRouteStyle.defaultActiveStyle imageStart:[TTMapRoute defaultImageDeparture] imageEnd:[TTMapRoute defaultImageDestination]];
     [self.tomtomMap.routeManager addRoute:mapRoute];
-    mapRoute.active = YES;
 }
 
 - (void)setWayPoint:(TTAnnotation *)annotation {
