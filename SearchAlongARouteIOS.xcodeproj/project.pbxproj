@@ -223,25 +223,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SearchAlongARouteIOS/Pods-SearchAlongARouteIOS-frameworks.sh",
-				"${PODS_ROOT}/TomTomOnlineSDKMaps/TomTomOnlineSDKMaps/TomTomOnlineSDKMaps.framework",
-				"${PODS_ROOT}/TomTomOnlineSDKMapsUIExtensions/TomTomOnlineSDKMapsUIExtensions/TomTomOnlineSDKMapsUIExtensions.framework",
-				"${PODS_ROOT}/TomTomOnlineSDKRouting/TomTomOnlineSDKRouting/TomTomOnlineSDKRouting.framework",
-				"${PODS_ROOT}/TomTomOnlineSDKSearch/TomTomOnlineSDKSearch/TomTomOnlineSDKSearch.framework",
-				"${PODS_ROOT}/TomTomOnlineUtils/TomTomOnlineUtils/TomTomOnlineUtils.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SearchAlongARouteIOS/Pods-SearchAlongARouteIOS-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TomTomOnlineSDKMaps.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TomTomOnlineSDKMapsUIExtensions.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TomTomOnlineSDKRouting.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TomTomOnlineSDKSearch.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TomTomOnlineUtils.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SearchAlongARouteIOS/Pods-SearchAlongARouteIOS-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SearchAlongARouteIOS/Pods-SearchAlongARouteIOS-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SearchAlongARouteIOS/Pods-SearchAlongARouteIOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
