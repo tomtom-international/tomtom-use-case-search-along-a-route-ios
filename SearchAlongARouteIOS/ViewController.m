@@ -5,14 +5,16 @@
 #import <TomTomOnlineSDKRouting/TomTomOnlineSDKRouting.h>
 #import <TomTomOnlineSDKMapsUIExtensions/TomTomOnlineSDKMapsUIExtensions.h>
 
-static const int BOTTOM_CONSTRAINT_CENTER_BUTTON_CONSTANT = -20;
-static const int LEFT_CONSTRAINT_CENTER_BUTTON_OFFSET = 57;
+static const int CENTER_BUTTON_BOOTTOM_ANCHOR = -30;
+static const int CENTER_BUTTON_LEFT_ANCHOR = -60;
+static const int CENTER_BUTTON_SIZE = 40;
 static const int SEARCH_MAX_DETOUR_TIME = 1000;
 static const int SEARCH_RESULTS_LIMIT = 10;
 static const int MESSAGE_DISPLAY_TIME_IN_SECONDS = 3;
 static const int KEYBOARD_SHOW_MULTIPLIER = 1;
 static const int KEYBOARD_HIDE_MULTIPLIER = -1;
 static NSString *const EMPTY_DEPARTURE_POSITION_TAG = @" ";
+static NSString *const API_KEY = @"YOUR_API_KEY";
 
 @interface ViewController () <TTMapViewDelegate, TTAnnotationDelegate, TTAlongRouteSearchDelegate, WayPointAddedDelegate, UISearchBarDelegate>
 @property(weak, nonatomic) IBOutlet UIButton *gasStationButton;
@@ -71,9 +73,9 @@ static NSString *const EMPTY_DEPARTURE_POSITION_TAG = @" ";
     self.tomtomMap.delegate = self;
     self.tomtomMap.annotationManager.delegate = self;
     self.controlView.mapView = self.tomtomMap;
-    self.reverseGeocoder = [[TTReverseGeocoder alloc] init];
-    self.route = [[TTRoute alloc] init];
-    self.alongRouteSearch = [[TTAlongRouteSearch alloc] init];
+    self.reverseGeocoder = [[TTReverseGeocoder alloc] initWithKey:API_KEY];
+    self.route = [[TTRoute alloc] initWithKey:API_KEY];
+    self.alongRouteSearch = [[TTAlongRouteSearch alloc] initWithKey:API_KEY];
     self.alongRouteSearch.delegate = self;
     
     self.departurePosition = kCLLocationCoordinate2DInvalid;
@@ -85,8 +87,11 @@ static NSString *const EMPTY_DEPARTURE_POSITION_TAG = @" ";
 }
 
 - (void)updateMapCenterButtonPosition:(CGSize)size {
-    self.controlView.bottomLayoutConstraintCenterButton.constant = BOTTOM_CONSTRAINT_CENTER_BUTTON_CONSTANT;
-    self.controlView.leftLayoutConstraintCenterButton.constant = size.width - LEFT_CONSTRAINT_CENTER_BUTTON_OFFSET;
+    [self.controlView.centerButton setTranslatesAutoresizingMaskIntoConstraints:false];
+    [[self.controlView.centerButton.bottomAnchor constraintEqualToAnchor:self.tomtomMap.bottomAnchor constant:CENTER_BUTTON_BOOTTOM_ANCHOR] setActive:true];
+    [[self.controlView.centerButton.leftAnchor constraintEqualToAnchor:self.tomtomMap.rightAnchor constant:CENTER_BUTTON_LEFT_ANCHOR] setActive:true];
+    [[self.controlView.centerButton.heightAnchor constraintEqualToConstant:CENTER_BUTTON_SIZE] setActive:true];
+    [[self.controlView.centerButton.widthAnchor constraintEqualToConstant:CENTER_BUTTON_SIZE] setActive:true];
 }
 
 - (void)initUIViews {
