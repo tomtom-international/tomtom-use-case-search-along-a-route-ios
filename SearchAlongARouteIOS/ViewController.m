@@ -21,11 +21,12 @@ static NSString *const API_KEY = @"YOUR_API_KEY";
 @property(weak, nonatomic) IBOutlet UIButton *restaurantButton;
 @property(weak, nonatomic) IBOutlet UIButton *cashMachineButton;
 @property(weak, nonatomic) IBOutlet UIButton *clearMapButton;
-@property(weak, nonatomic) IBOutlet TTMapView *tomtomMap;
+@property(nonatomic) IBOutlet TTMapView *tomtomMap;
 @property(weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property(weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
 @property(weak, nonatomic) IBOutlet NSLayoutConstraint *bottomStackHeight;
 @property(weak, nonatomic) IBOutlet TTControlView *controlView;
+@property (weak, nonatomic) IBOutlet UIStackView *helpAndClearButtons;
 
 @property CLLocationCoordinate2D departurePosition;
 @property CLLocationCoordinate2D destinationPosition;
@@ -69,10 +70,34 @@ static NSString *const API_KEY = @"YOUR_API_KEY";
     [self updateMapCenterButtonPosition:size];
 }
 
+- (void)initCenterButton {
+    TTControlView *controlView = [TTControlView new];
+    controlView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    controlView.mapView = self.tomtomMap;
+    [self.tomtomMap addSubview:controlView];
+    [self.tomtomMap addSubview:self.helpAndClearButtons];
+    self.controlView = controlView;
+    
+    self.controlView.centerButton.hidden = NO;
+    [self.controlView initDefaultCenterButton];
+    [self.controlView initDefaultCompassButton];
+    [self updateMapCenterButtonPosition:self.view.frame.size];
+}
+
 - (void)initTomTomServices {
+    TTMapStyleDefaultConfiguration *style = [[TTMapStyleDefaultConfiguration alloc] init];
+    TTMapConfiguration *config = [[[[[TTMapConfigurationBuilder alloc]
+           withMapKey:API_KEY]
+          withTrafficKey:API_KEY]
+      withMapStyleConfiguration:style] build];
+    
+    self.tomtomMap = [[TTMapView alloc] initWithMapConfiguration:config];
+    [self.view addSubview:self.tomtomMap];
+    [self initTomTomMapConstraints];
+    
     self.tomtomMap.delegate = self;
     self.tomtomMap.annotationManager.delegate = self;
-    self.controlView.mapView = self.tomtomMap;
+    
     self.reverseGeocoder = [[TTReverseGeocoder alloc] initWithKey:API_KEY];
     self.route = [[TTRoute alloc] initWithKey:API_KEY];
     self.alongRouteSearch = [[TTAlongRouteSearch alloc] initWithKey:API_KEY];
@@ -82,8 +107,19 @@ static NSString *const API_KEY = @"YOUR_API_KEY";
     self.destinationPosition = kCLLocationCoordinate2DInvalid;
     self.wayPointPosition = kCLLocationCoordinate2DInvalid;
     
-    [self.controlView initDefaultCenterButton];
-    [self updateMapCenterButtonPosition:self.view.frame.size];
+    [self initCenterButton];
+}
+
+- (void)onMapReady:(TTMapView *)mapView {
+    self.tomtomMap.showsUserLocation = YES;
+}
+
+- (void)initTomTomMapConstraints {
+    [self.tomtomMap setTranslatesAutoresizingMaskIntoConstraints:false];
+    [[self.tomtomMap.leftAnchor constraintEqualToAnchor:self.view.leftAnchor] setActive:true];
+    [[self.tomtomMap.topAnchor constraintEqualToAnchor:self.view.topAnchor] setActive:true];
+    [[self.tomtomMap.rightAnchor constraintEqualToAnchor:self.view.rightAnchor] setActive:true];
+    [[self.tomtomMap.bottomAnchor constraintEqualToAnchor:self.searchBar.topAnchor] setActive:true];
 }
 
 - (void)updateMapCenterButtonPosition:(CGSize)size {
@@ -284,6 +320,7 @@ static NSString *const API_KEY = @"YOUR_API_KEY";
     }
     TTMapRoute *mapRoute = [TTMapRoute routeWithCoordinatesData:self.fullRoute withRouteStyle:TTMapRouteStyle.defaultActiveStyle imageStart:[TTMapRoute defaultImageDeparture] imageEnd:[TTMapRoute defaultImageDestination]];
     [self.tomtomMap.routeManager addRoute:mapRoute];
+    [self.tomtomMap.routeManager showAllRoutesOverview];
 }
 
 - (void)setWayPoint:(TTAnnotation *)annotation {
@@ -357,13 +394,15 @@ static NSString *const API_KEY = @"YOUR_API_KEY";
 
 - (void)keyboardWillShow:(NSNotification *)notification {
     if (!self.keyboardShown) {
-        [self adjustHeight:YES withNotification:notification];
+        CGFloat keyboardHeight = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
+        [self adjustHeight:YES withHeight:keyboardHeight];
     }
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification {
     if (self.keyboardShown) {
-        [self adjustHeight:NO withNotification:notification];
+        CGFloat keyboardHeight = [notification.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+        [self adjustHeight:NO withHeight:keyboardHeight];
     }
 }
 
@@ -375,15 +414,10 @@ static NSString *const API_KEY = @"YOUR_API_KEY";
     self.keyboardShown = NO;
 }
 
-- (void)adjustHeight:(Boolean)show withNotification:(NSNotification *)notification {
-    NSDictionary *userInfo = [notification userInfo];
-    CGRect keyboardFrame = [userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    NSTimeInterval animationDuration = [userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+- (void)adjustHeight:(Boolean)show withHeight:(CGFloat)height {
     CGFloat bottomStackHeight = self.bottomStackHeight.constant;
-    CGFloat changeInHeight = (CGRectGetHeight(keyboardFrame) - bottomStackHeight) * (show ? KEYBOARD_SHOW_MULTIPLIER : KEYBOARD_HIDE_MULTIPLIER);
-    [UIView animateWithDuration:animationDuration animations:^{
-        self.bottomConstraint.constant += changeInHeight;
-    }];
+    CGFloat changeInHeight = (height - bottomStackHeight) * (show ? KEYBOARD_SHOW_MULTIPLIER : KEYBOARD_HIDE_MULTIPLIER);
+    self.bottomConstraint.constant += changeInHeight;
 }
 
 @end

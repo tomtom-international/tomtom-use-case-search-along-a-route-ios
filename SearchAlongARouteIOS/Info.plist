@@ -51,11 +51,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>OnlineMap.Key</key>
-	<string>YOUR_KEY_GOES_HERE</string>
-	<key>OnlineSearch.Key</key>
-	<string>YOUR_KEY_GOES_HERE</string>
-	<key>OnlineRouting.Key</key>
-	<string>YOUR_KEY_GOES_HERE</string>
 </dict>
 </plist>

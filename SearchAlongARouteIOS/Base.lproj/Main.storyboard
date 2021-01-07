@@ -24,22 +24,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1hl-su-Ttd" customClass="TTMapView">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="576"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GI3-eF-qMH" customClass="TTControlView">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="576"/>
-                                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </view>
-                                </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="GI3-eF-qMH" secondAttribute="bottom" id="JkK-Wd-KIh"/>
-                                    <constraint firstItem="GI3-eF-qMH" firstAttribute="leading" secondItem="1hl-su-Ttd" secondAttribute="leading" id="Ppm-32-Nqv"/>
-                                    <constraint firstAttribute="trailing" secondItem="GI3-eF-qMH" secondAttribute="trailing" id="dnb-Nb-xk9"/>
-                                    <constraint firstItem="GI3-eF-qMH" firstAttribute="top" secondItem="1hl-su-Ttd" secondAttribute="top" id="hJM-Vw-imW"/>
-                                </constraints>
-                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="9uu-g3-rEo">
                                 <rect key="frame" x="359" y="20" width="40" height="95"/>
                                 <subviews>
@@ -158,15 +142,11 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="GHy-GJ-2st" secondAttribute="trailing" id="27f-SD-qj5"/>
                             <constraint firstItem="9uu-g3-rEo" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="5dy-DR-tVY"/>
                             <constraint firstItem="WHn-Lw-4dE" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="9nx-s2-8zB"/>
-                            <constraint firstItem="1hl-su-Ttd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="CAG-ZC-NH8"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9uu-g3-rEo" secondAttribute="trailing" constant="15" id="Ksw-Md-th4"/>
-                            <constraint firstItem="WHn-Lw-4dE" firstAttribute="top" secondItem="1hl-su-Ttd" secondAttribute="bottom" id="Nuc-OP-xsU"/>
                             <constraint firstItem="GHy-GJ-2st" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="OCR-F5-HZ6"/>
                             <constraint firstItem="WHn-Lw-4dE" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ObN-7w-Uaa"/>
                             <constraint firstItem="GHy-GJ-2st" firstAttribute="top" secondItem="WHn-Lw-4dE" secondAttribute="bottom" id="QHA-Ah-eGL"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="GHy-GJ-2st" secondAttribute="bottom" id="bEN-Zh-iKu"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1hl-su-Ttd" secondAttribute="trailing" id="teQ-Ht-sCb"/>
-                            <constraint firstItem="1hl-su-Ttd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="zMR-YV-KGP"/>
                         </constraints>
                     </view>
                     <connections>
@@ -174,16 +154,15 @@
                         <outlet property="bottomStackHeight" destination="FID-ne-gnQ" id="scP-M0-qUN"/>
                         <outlet property="cashMachineButton" destination="Vou-PW-aNw" id="QX3-9v-noh"/>
                         <outlet property="clearMapButton" destination="UGt-KL-a6D" id="QYa-EV-7bW"/>
-                        <outlet property="controlView" destination="GI3-eF-qMH" id="sgr-Ii-QSP"/>
                         <outlet property="gasStationButton" destination="Udo-r1-Jcy" id="CkA-ti-IdG"/>
+                        <outlet property="helpAndClearButtons" destination="9uu-g3-rEo" id="ljb-Wy-7PE"/>
                         <outlet property="restaurantButton" destination="lMb-N1-Yop" id="1AO-8k-TEw"/>
                         <outlet property="searchBar" destination="WHn-Lw-4dE" id="ihN-iK-HI7"/>
-                        <outlet property="tomtomMap" destination="1hl-su-Ttd" id="7WW-IO-HE1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="116.25" y="117.5"/>
+            <point key="canvasLocation" x="183" y="124"/>
         </scene>
         <!--Info Screen View Controller-->
         <scene sceneID="lWn-YL-mEP">
