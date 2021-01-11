@@ -6,8 +6,8 @@ target 'SearchAlongARouteIOS' do
   # use_frameworks!
 
   # Pods for SearchAlongTheRouteIOS
-  pod 'TomTomOnlineSDKMaps', '2.4.464'
-  pod 'TomTomOnlineSDKSearch', '2.4.464'
-  pod 'TomTomOnlineSDKRouting', '2.4.464'
-  pod 'TomTomOnlineSDKMapsUIExtensions', '2.4.464'
+  pod 'TomTomOnlineSDKMaps', '2.4.699'
+  pod 'TomTomOnlineSDKSearch', '2.4.699'
+  pod 'TomTomOnlineSDKRouting', '2.4.699'
+  pod 'TomTomOnlineSDKMapsUIExtensions', '2.4.699'
 end
