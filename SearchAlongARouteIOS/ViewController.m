@@ -112,6 +112,7 @@ static NSString *const API_KEY = @"YOUR_API_KEY";
 
 - (void)onMapReady:(TTMapView *)mapView {
     self.tomtomMap.showsUserLocation = YES;
+    self.tomtomMap.annotationManager.clustering = true;
 }
 
 - (void)initTomTomMapConstraints {
